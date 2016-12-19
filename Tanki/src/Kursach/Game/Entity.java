@@ -22,6 +22,7 @@ public abstract class Entity {
     }
 
     public abstract void update(Input input);
-    public abstract void render(Graphics2D g);
 
+
+    public abstract void render(Graphics2D g);
 }

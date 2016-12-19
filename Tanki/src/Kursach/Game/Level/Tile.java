@@ -21,11 +21,11 @@ public class Tile {
 
     }
 
-    protected void render (Graphics2D g, int x, int y) {
+    public void render(Graphics2D g, int x, int y) {
         g.drawImage(image, x, y, null);
     }
 
-    protected TyleType type() { //узнать тип тайла
+    public TyleType type() { //узнать тип тайла
         return type;
     }
 }
