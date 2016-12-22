@@ -14,8 +14,12 @@ public class Enemy {
     public int y;
     int v;
 
-    public Image img = new ImageIcon("res/1bot.png").getImage();
+    public Image img = new ImageIcon(getClass().getClassLoader().getResource("res/1bot.png")).getImage();
     Road road;
+
+    public Rectangle getRect() {
+        return new Rectangle(x, y, 100, 20);
+    }
 
     public Enemy (int x, int y, int v, Road road) {
         this.x = x;
@@ -25,7 +29,7 @@ public class Enemy {
     }
 
     public void muve () {
-        y = y - road.p.v - v;
+        y++;
 
     }
 

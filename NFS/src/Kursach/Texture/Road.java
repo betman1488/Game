@@ -5,8 +5,6 @@ import Kursach.Game.Player;
 
 import javax.swing.*;
 import javax.swing.Timer;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.parser.Element;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,19 +20,22 @@ import java.util.Random;
  */
 public class  Road extends JPanel implements ActionListener, Runnable{
 
-    Timer mainTimer = new Timer(10, (ActionListener) this);
+    Timer mainTimer = new Timer(2, (ActionListener) this);
 
-    Image img = new ImageIcon("res/trassa.png").getImage();
+    Image img = new ImageIcon(getClass().getClassLoader().getResource("res/trassa.png")).getImage();
 
     public Player p = new Player();
 
     Thread enemiesFactory = new Thread(this);
 
+    //Thread sound = new Thread(new Audio());
+
     List<Enemy> enemies = new ArrayList<Enemy>(); //список врагов
 
     public Road () {
         mainTimer.start();
-        enemiesFactory.start();
+        enemiesFactory.start(); //завод ботов
+        //sound.start();
         addKeyListener(new Key());
         setFocusable(true);
     }
@@ -55,6 +56,12 @@ public class  Road extends JPanel implements ActionListener, Runnable{
         g.drawImage(img, 0, -p.layer2, null); //слой два
         g.drawImage(p.img, p.x, p.y, null); //игрок
 
+        double v = (200 / Player.MAX_V) * p.v;
+        g.setColor(Color.BLACK);
+        Font font = new Font("Arial", Font.ITALIC, 20);
+        g.setFont(font);
+        g.drawString("Скорость: " + ((int)v) + " км/ч", 170, 30);
+
         Iterator<Enemy> i = enemies.iterator();
         while (i.hasNext()) {
             Enemy e = i.next(); //получили новый обтект
@@ -72,8 +79,31 @@ public class  Road extends JPanel implements ActionListener, Runnable{
     @Override
     public void actionPerformed(ActionEvent e) {
         p.muve(); //ехать
-        repaint(); //перерисовка
-        System.out.println(enemies.size());
+        repaint(); //перерисовка ботов
+        testCollisionWithEnemies();
+        testWin();
+    }
+
+    private void testWin() {
+
+        if (p.s > 200000) {
+            JOptionPane.showMessageDialog(null, "Вы выиграли!");
+            System.exit(0);
+        }
+
+    }
+
+    private void testCollisionWithEnemies() {
+
+        Iterator<Enemy> i = enemies.iterator();
+        while (i.hasNext()) {
+            Enemy e = i.next();
+            if (p.getRect().intersects(e.getRect())) { //если пересикаются
+                JOptionPane.showMessageDialog(null, "Вы проиграли!");
+                System.exit(1);
+            }
+        }
+
     }
 
     @Override
@@ -81,8 +111,8 @@ public class  Road extends JPanel implements ActionListener, Runnable{
         while (true) {
             Random random = new Random();
             try {
-                Thread.sleep(random.nextInt(2000));
-                enemies.add(new Enemy(random.nextInt(500),600,random.nextInt(10), this));
+                Thread.sleep(random.nextInt(9500));
+                enemies.add(new Enemy(random.nextInt(500),1,random.nextInt(10), this));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
