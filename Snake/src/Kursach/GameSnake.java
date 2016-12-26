@@ -10,18 +10,18 @@ import java.util.*;
 
 public class GameSnake {
 
-    final String TITLE_OF_PROGRAM = "Snake";
-    final String GAME_OVER_MSG = "GAME OVER";
-    final int POINT_RADIUS = 20; // в пикселях
+    private String TITLE_OF_PROGRAM = "Snake";
+    private String GAME_OVER_MSG = "GAME OVER";
+    private int POINT_RADIUS = 20; // в пикселях
     final int FIELD_WIDTH = 30; //
     final int FIELD_HEIGHT = 20;
     final int FIELD_DX = 6;
     final int FIELD_DY = 28;
-    final int START_LOCATION = 200;
-    final int START_SNAKE_SIZE = 6; //размер начальной змейки
-    final int START_SNAKE_X = 10; //начальное расположение
-    final int START_SNAKE_Y = 10; // начальное расположение
-    final int SHOW_DELAY = 10; //милисекунд
+    private int START_LOCATION = 200;
+    private int START_SNAKE_SIZE = 6; //размер начальной змейки
+    private int START_SNAKE_X = 10; //начальное расположение
+    private int START_SNAKE_Y = 10; // начальное расположение
+    private int SHOW_DELAY = 10; //милисекунд
 
     //код клавиш
     final int LEFT = 37;
